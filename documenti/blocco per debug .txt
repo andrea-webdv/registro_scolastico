@@ -1,0 +1,19 @@
+#################
+ 
+$testo_alert = "Descrivo cosa voglio controllare:\\n\\n";
+
+foreach ($ARRAY_DA_CONTROLALRE as $indice => $record) {
+    $json_record = json_encode($record, JSON_PRETTY_PRINT);
+    
+    $testo_alert .= "--- Record " . ($indice + 1) . " ---\\n" . $json_record . "\\n\\n";
+}
+
+$json_dump_alert = json_encode($dati_candidato[0]['ID_corso']);#$testo_alert);
+
+echo "<script>
+    alert($json_dump_alert);
+</script>";
+
+// die();
+################
+

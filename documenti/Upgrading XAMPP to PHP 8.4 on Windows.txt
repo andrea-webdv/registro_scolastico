@@ -1,0 +1,86 @@
+Currently, Apache Friends does not ship XAMPP with PHP 8.4, so you need to manually upgrade the PHP version in your existing XAMPP installation.
+
+Locate your XAMPP installation directory, usually C:\xampp.
+
+Compress the php folder into a ZIP archive (e.g., php_backup.zip) for backup.
+
+Save a copy of your custom php.ini file if you have modified it.
+
+Visit the official PHP for Windows download page and select the latest PHP 8.4.x version.
+
+Choose the Thread Safe ZIP package matching your system architecture (x86 or x64) and download it.
+
+Stop Apache from the XAMPP Control Panel before replacing files.
+
+Extract the contents of the PHP 8.4 ZIP file.
+
+Overwrite the existing C:\xampp\php folder with the extracted files, ensuring no extra folder nesting.
+
+If you had a custom php.ini, copy relevant settings into the new php.ini in C:\xampp\php.
+
+Alternatively, rename php.ini-development to php.ini for default settings and adjust as needed.
+
+Restart Apache from the XAMPP Control Panel.
+
+Open a PHP info page or run php -v in Command Prompt to confirm PHP 8.4 is active.
+
+If Apache fails to start, check error logs for missing DLLs or path issues and adjust php.ini accordingly.
+
+
+https://www.danpros.com/post/how-to-upgrade-php-in-xampp
+https://www.php.net/downloads.php?os=windows
+
+-----------------------
+L'errore che visualizzi è causato da un conflitto di versioni tra i file DLL di PHP e quelli caricati da Apache a seguito dell'aggiornamento di XAMPP. Nello specifico, l'estensione php_curl.dll sta cercando la funzione libssh2_crypto_engine all'interno della libreria libssh2.dll. Tuttavia, Apache sta caricando una versione precedente o differente di libssh2.dll (spesso situata nella cartella di Apache o nelle variabili d'ambiente di Windows) che non contiene quel punto di ingresso. [1, 2] 
+
+Anche se l'ambiente sembra funzionare dopo aver chiuso l'avviso, rischieresti crash improvvisi o il mancato funzionamento delle richieste HTTP/cURL nei tuoi script PHP.
+
+Ecco i passaggi sequenziali per risolvere definitivamente il problema:
+
+## 1. Copiare il file libssh2.dll aggiornato
+Il file corretto e aggiornato si trova già nella cartella di PHP del tuo XAMPP, ma Apache non riesce a vederlo come prioritario. [1] 
+
+* 
+* Apri la cartella di installazione di XAMPP (di solito C:\xampp\).
+* Vai nel percorso C:\xampp\php\.
+* Cerca il file chiamato libssh2.dll.
+* Fai clic con il tasto destro del mouse e seleziona Copia.
+* Spostati nella cartella C:\xampp\apache\bin\.
+* individua un file con lo stesos nome e rinominalo libssh2.dll_backup, per 	sicurezza
+* Incolla il file all'interno di questa cartella, sostituendo quello 	eventualmente già presente. [1, 3, 4] 
+
+## 2. Configurare Apache per caricare le librerie (Soluzione alternativa o complementare)
+Se il problema persiste dopo aver copiato il file, puoi forzare Apache a caricare le librerie corrette direttamente dal file di configurazione: [5, 6] 
+
+*
+* Dal pannello di controllo di XAMPP, fai clic sul pulsante Config in corrispondenza della riga di Apache e seleziona Apache (httpd.conf).
+* Scorri il file di testo fino in fondo e aggiungi la riga seguente (assicurati che il percorso corrisponda alla tua installazione):
+
+LoadFile "C:/xampp/php/libssh2.dll"
+
+* Salva il file e chiudilo. [5] 
+* 
+
+## 3. Riavviare i servizi
+
+* 
+* Torna al pannello di controllo di XAMPP.
+* Clicca su Stop sia per Apache che per MySQL.
+* Attendi qualche secondo e clicca nuovamente su Start.
+* 
+
+L'avviso non dovrebbe più comparire e i componenti utilizzeranno le librerie corrette e sincronizzate.
+Se l'errore dovesse ripresentarsi, fammi sapere:
+
+* 
+* Quale versione esatta di XAMPP (o di PHP) hai installato?
+* Se hai modificato manualmente le variabili d'ambiente di sistema di Windows in passato.
+* 
+
+
+[1] [https://github.com](https://github.com/php/php-src/issues/16794)
+[2] [https://github.com](https://github.com/php/php-src/issues/16942)
+[3] [https://stackoverflow.com](https://stackoverflow.com/questions/5418262/how-to-enable-curl-in-xampp)
+[4] [https://stackoverflow.com](https://stackoverflow.com/questions/78951241/xampp-php-8-2-23-unable-to-load-dynamic-library-curl)
+[5] [https://www.php.net](https://www.php.net/manual/en/curl.installation.php)
+[6] [https://github.com](https://github.com/curl/curl/issues/18685)

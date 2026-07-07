@@ -1,0 +1,8 @@
+
+
+SELECT studenti.`matricola`, studenti.`cognome`, studenti.`nome`, materie.`nome_materia`, calendari.`TS_inizio`, presenze.`ora_entrata`, presenze.`ora_uscita`
+FROM presenze
+INNER JOIN calendari ON calendari.`ID_lezione` = presenze.`ID_lezione`
+INNER JOIN materie ON calendari.`ID_materia` = materie.`ID_materia`
+INNER JOIN studenti ON studenti.`matricola` = presenze.`matricola`
+

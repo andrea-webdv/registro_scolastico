@@ -1,0 +1,66 @@
+
+/* AREA OPERATIVA CENTRALE */
+.zona-centrale {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+/* ==========================================================================
+   2. PARTE SPECIFICA (Solo Scheda di Registrazione)
+   ========================================================================== */
+.scatola-registrazione, #rettangolo {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.lato-contenuto {
+    width: 50%;
+    padding: 35px 35px;
+}
+
+.lato-contenuto .campo-input {
+    margin-bottom: 24px;
+    padding: 13px 14px;
+}
+
+.lato-contenuto .bottone-rosso {
+    margin-top: 20px;
+    padding: 15px;
+}
+
+.lato-contenuto h1 {
+    color: var(--rosso_brand);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.lato-contenuto .sottotitolo {
+    color: #555555;
+    font-size: 18px;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.lato-contenuto form {
+    display: flex;
+    flex-direction: column;
+}
+
+.lato-immagine, #image {
+    width: 50%;
+    background-image: url('https://contentf5.dailynewshungary.com/wp-content/uploads/2023/09/Budapest-Corvinus-University.webp');
+    background-size: cover;
+    background-position: center;
+}
+

@@ -1,0 +1,149 @@
+  main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+  }
+
+  .titolo-pagina {
+      color: #ffffff;
+      /* Si vedrà perfettamente sul --grigio_brand */
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+
+  .sottotitolo-pagina {
+      color: #e0e0e0;
+      margin-bottom: 40px;
+      font-size: 15px;
+  }
+
+  /* --- CONTENITORE CORSI (FLEXBOX) --- */
+  .contenitore-corsi {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+  }
+
+  /* --- CARD DEL CORSO --- */
+  .card-corso {
+      background-color: #ffffff;
+      border-top: 6px solid var(--rosso_brand);
+      border-radius: 6px;
+      padding: 25px;
+      flex: 1;
+      min-width: 280px;
+      max-width: 350px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+  }
+
+  .card-corso:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  .tag-settore {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #333333;
+      font-weight: 600;
+      margin-bottom: 12px;
+  }
+
+  .titolo-corso {
+      color: var(--rosso_brand);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      line-height: 1.4;
+  }
+
+  .durata-corso {
+      font-size: 14px;
+      color: #666666;
+      border-top: 1px dashed #cccccc;
+      padding-top: 10px;
+  }
+
+  /* --- FINESTRELLA / MODAL DI PRE-REGISTRAZIONE --- */
+  .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+  }
+
+  .modal-box {
+      background-color: #ffffff;
+      padding: 35px;
+      border-radius: 6px;
+      border-top: 8px solid var(--rosso_brand);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      transform: scale(0.85);
+      transition: transform 0.25s ease;
+  }
+
+  .modal-overlay.attivo {
+      display: flex;
+      opacity: 1;
+  }
+
+  .modal-overlay.attivo .modal-box {
+      transform: scale(1);
+  }
+
+  .modal-box h2 {
+      color: var(--rosso_brand);
+      margin-bottom: 15px;
+      font-size: 22px;
+      text-transform: uppercase;
+  }
+
+  .modal-box p {
+      margin-bottom: 25px;
+      color: #333333;
+      font-size: 15px;
+      line-height: 1.5;
+  }
+
+  .corso-selezionato-testo {
+      display: block;
+      margin-top: 8px;
+      color: var(--rosso_brand);
+      font-weight: bold;
+  }
+
+  .link-annulla {
+      display: inline-block;
+      margin-top: 15px;
+      color: #666666;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.2s;
+  }
+
+  .link-annulla:hover {
+      color: var(--rosso_brand);
+  }
