@@ -1,9 +1,9 @@
+<?php session_start(); ?>
 <?php
-require "./moduli/Comunicazione_database.php";
+$kickback = $_GET['e'] ?? null;
 
-$lettura = new Database("scuola");
-$query = "SELECT `nome_corso`, `ID_corso`, `cod_edizione`, `durata` FROM `corsi` WHERE `accetta_iscrizioni` = 1";
-$corsiDisponibili = $lettura->Query_select($query);
+// Se lo staff � loggato o c'� un parametro di ruotato, partiamo direttamente con la tessera girata sul retro
+$lato_iniziale = (isset($_SESSION['staff_codice']) || isset($_GET['ruotato'])) ? "ruotato" : "";
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -11,130 +11,125 @@ $corsiDisponibili = $lettura->Query_select($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgenForm - Offerta Formativa</title>
-    <link rel="stylesheet" href="css/agenform.css">
-    <link rel="stylesheet" href="css/index.css">
+    <title>Homepage - Gestione QR Code</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/agenform.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <style>
+        .error {
+            padding: .5rem 2.4rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: large;
+            font-weight: 600;
+            position: absolute;
+            top: 5%;
+            border: 1px solid var(--rosso_brand);
+            background-color: #e9e6e6;
+            color: var(--rosso_brand);
+            border-radius: 6px;
+        }
+    </style>
 </head>
 
-
 <body>
+    <?php
+    if (isset($kickback) && $kickback == "non_loggato") {
+        echo "
+        <p class='error'> Errore: Effettuare il login per accadere al registro presenze!.<p>
+        ";
+    } elseif (isset($kickback) && $kickback == "loggato") {
+        echo "
+        <p class='error'> Errore: Effettuare il logout prima di effettuare un nuovo login!.<p>
+        ";
+    }
+    ?>
 
-    <header class="barra-superiore">
-        <div class="spazio-logo">
-            <img src="./materiali/Logo_AgenForm_2.png" alt="Logo AgenForm" class="immagine-logo">
-        </div>
+    <!-- NAVBAR CON TITOLO PRINCIPALE -->
+    <?php
+    require_once __DIR__ . "/navbar.php";
+    navbar([
+        ['<a href="./registrazione/landing.php" class="btn-login" style="text-decoration:none; display:inline-block; margin-top:15px;">Simula candidatura e registrazione</a>']
+    ], "Registro Elettronico Digitale");
+    ?>
 
-        <nav class="gruppo-bottoni">
-            <a href="index.php" class="bottone-menu attivo">Corsi</a>
-            <a href="login.php" class="bottone-menu">Login</a>
-        </nav>
-    </header>
-    <main>
-        <h1 class="titolo-pagina">Offerta Formativa</h1>
-        <p class="sottotitolo-pagina">Seleziona un corso per inviare la tua pre-iscrizione</p>
+    <!-- TESSERA ROTANTE 3D (STUDENTE / STAFF) -->
+    <div class="login-container-flip">
+        <div class="scatola-login-inner <?= $lato_iniziale; ?>" id="tesseraLogin">
 
-        <div class="contenitore-corsi" id="grigliaCorsi"></div>
-    </main>
+            <!-- FACCIA FRONTE: STUDENTE -->
+            <div class="faccia-fronte scatola-card">
+                <h2>Area Studente</h2>
 
-    <div class="modal-overlay" id="modalPreRegistrazione">
-        <div class="modal-box">
-            <h2>Candidati ora!</h2>
-            <p>clicca il link sottostante e compila il modulo per candidarti al corso: <span class="corso-selezionato-testo" id="nomeCorsoSelezionato"></span></p>
+                <?php if (isset($_SESSION['studente_matricola'])): ?>
+                    <form action="./accesso/login_studente.php" method="POST" class="form-flip">
+                        <p class="info-login">Loggato come: <strong><?= htmlspecialchars($_SESSION['studente_nome'] ?? 'Studente'); ?></strong></p>
+                        <p class="info-login">Matricola: <strong><?= htmlspecialchars($_SESSION['studente_matricola']); ?></strong></p>
+                        <input type="hidden" name="matricola" value="<?= htmlspecialchars($_SESSION['studente_matricola']); ?>">
+                        <button type="submit" class="btn-login" style="text-decoration:none; display:inline-block; margin-top:15px;">Continua</button>
+                        <a href="./accesso/logout.php" class="btn-login" style="text-decoration:none; display:inline-block; margin-top:15px;">Cambia Utente</a>
+                    </form>
+                <?php else: ?>
+                    <form action="./accesso/login_studente.php" method="POST" class="form-flip">
+                        <input type="text" name="matricola" placeholder="Inserisci Matricola" required>
+                        <button type="submit" class="btn-login">Login Studente</button>
+                    </form>
+                <?php endif; ?>
 
-            <a id="pulsanteProcedi" href="candidatura.php" class="bottone-rosso" style="display: block; text-align: center; text-decoration: none;">
-                voglio candidarmi
-            </a>
+                <button type="button" class="btn-switch-flip" id="btnSpostaAdAdmin">
+                    Sei dello Staff? Clicca qui ??
+                </button>
+            </div>
 
-            <span class="link-annulla" id="chiudiModal">Torna indietro</span>
+            <!-- FACCIA RETRO: STAFF -->
+            <div class="faccia-retro scatola-card">
+                <h2>Area Staff</h2>
+
+                <?php if (isset($_SESSION['staff_codice'])): ?>
+                    <form action="./accesso/login_staff.php" method="POST" class="form-flip">
+                        <p class="info-login">Loggato come: <strong><?= htmlspecialchars($_SESSION['staff_nome'] ?? 'Staff'); ?></strong></p>
+                        <p class="info-login">Codice: <strong><?= htmlspecialchars($_SESSION['staff_codice']); ?></strong></p>
+                        <input type="hidden" name="codice_staff" value="<?= htmlspecialchars($_SESSION['staff_codice']); ?>">
+                        <button type="submit" class="btn-login" style="text-decoration:none; display:inline-block; margin-top:15px;">Continua</button>
+                        <a href="./accesso/logout.php" class="btn-login" style="text-decoration:none; display:inline-block; margin-top:15px;">Cambia Utente</a>
+                    </form>
+                <?php else: ?>
+                    <form action="./accesso/login_staff.php" method="POST" class="form-flip">
+                        <input type="text" name="codice_staff" placeholder="Codice Staff" required>
+                        <button type="submit" class="btn-login">Login Staff</button>
+                    </form>
+                <?php endif; ?>
+
+                <button type="button" class="btn-switch-flip" id="btnSpostaAStudente">
+                    Sei uno Studente? Clicca qui ??
+                </button>
+            </div>
+
         </div>
     </div>
 
+    <!-- SCRIPT DI GESTIONE ROTAZIONE E TRANSIZIONE -->
     <script>
-        // Array dei corsi
-        /** @type {Array<{nome_corso: string, cod_edizione: string}>} */
-        const corsiDisponibili = <?php echo json_encode($corsiDisponibili, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?>;
+        // Animazione di rotazione 3D della tessera
+        const tessera = document.getElementById('tesseraLogin');
+        const vaiAdAdmin = document.getElementById('btnSpostaAdAdmin');
+        const vaiAStudente = document.getElementById('btnSpostaAStudente');
 
-        if (!corsiDisponibili) corsiDisponibili = [{
-                nome_corso: "Sviluppatore Web Full Stack (PHP/Python)",
-                cod_edizione: "Tecnologie ICT",
-                durata: "800 ore"
-            },
-            {
-                nome_corso: "Tecnico Sistemi e Reti Cloud",
-                cod_edizione: "Sistemi e Reti",
-                durata: "600 ore"
-            },
-            {
-                nome_corso: "Programmatore database SQL Server",
-                cod_edizione: "Data Management",
-                durata: "500 ore"
-            },
-            {
-                nome_corso: "Esperto Web Design & Flexbox",
-                cod_edizione: "Design Digitale",
-                durata: "400 ore"
-            },
-            {
-                nome_corso: "Cybersecurity & Network Specialist",
-                cod_edizione: "Sicurezza Informatica",
-                durata: "700 ore"
-            },
-            {
-                nome_corso: "Amministratore di Sistema Linux",
-                cod_edizione: "Sistemi",
-                durata: "550 ore"
-            }
-        ];
-
-        // Funzione per estrarre 3 corsi casuali
-        function estraiCorsiCasuali(lista, quantita) {
-            const mescolata = [...lista].sort(() => 0.5 - Math.random());
-            return mescolata.slice(0, quantita);
-        }
-
-        const grigliaCorsi = document.getElementById('grigliaCorsi');
-        const modal = document.getElementById('modalPreRegistrazione');
-        const chiudiModal = document.getElementById('chiudiModal');
-        const nomeCorsoSelezionato = document.getElementById('nomeCorsoSelezionato');
-        const pulsanteProcedi = document.getElementById('pulsanteProcedi');
-
-        //const corsiSelezionati = estraiCorsiCasuali(corsiDisponibili, 3);
-
-        corsiDisponibili.forEach(corso => {
-            const card = document.createElement('div');
-            card.className = 'card-corso';
-            /* rimpiazzare settore con con il codice edizione  */
-            card.innerHTML = `
-                <div>
-                <div class="titolo-corso">${corso.nome_corso}</div>
-                <div class="tag-settore">edizione di: ${corso.cod_edizione}</div>
-                </div>
-                <div class="durata-corso">Durata: ${corso.durata}</div>
-            `;
-
-            card.addEventListener('click', () => {
-                nomeCorsoSelezionato.textContent = corso.nome_corso;
-
-                // Manda alla pagina di registrazione con il nome del corso
-                pulsanteProcedi.href = `candidatura.php?corso=${encodeURIComponent(corso.nome_corso)}&id=${encodeURIComponent(corso.ID_corso)}`;
-
-                modal.classList.add('attivo');
+        if (tessera && vaiAdAdmin && vaiAStudente) {
+            vaiAdAdmin.addEventListener('click', function(e) {
+                e.preventDefault();
+                tessera.classList.add('ruotato');
             });
 
-            grigliaCorsi.appendChild(card);
-        });
-
-        // Chiusura modal
-        chiudiModal.addEventListener('click', () => {
-            modal.classList.remove('attivo');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('attivo');
-            }
-        });
+            vaiAStudente.addEventListener('click', function(e) {
+                e.preventDefault();
+                tessera.classList.remove('ruotato');
+            });
+        }
     </script>
+
 </body>
 
 </html>

@@ -1,0 +1,55 @@
+/* La nuova scatola che contiene la tabella e crea la barra laterale */
+.finestra_scorrimento {
+    max-height: 380px; /* Altezza ideale per mostrare circa 5 righe */
+    overflow-y: auto; /* Fa apparire la barra di scorrimento verticale solo se i dati superano le 5 righe */
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px; /* Spostiamo qui i bordi arrotondati */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* E spostiamo qui l'ombra */
+}
+
+/* La tabella interna ora si adatta alla finestra madre */
+.table-container { 
+    display: table; 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.row { 
+    display: table-row; 
+    border-bottom: 1px solid #e8e8e8; 
+    transition: background-color 0.2s ease; 
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row:not(.header):hover {
+    background-color: #f9f9f9;
+}
+
+.cell { 
+    display: table-cell; 
+    padding: 16px 20px; 
+    color: #333333 !important; 
+    text-align: left; 
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+/* Regole per bloccare l'intestazione in alto */
+.header .cell { 
+    background-color: #f4f4f4; 
+    border-bottom: 3px solid var(--rosso_brand, #951d3b); 
+    font-weight: 700; 
+    color: #333333 !important; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    position: sticky; /* Comando magico che la rende "appiccicosa" */
+    top: 0; /* La fa aderire esattamente al tetto della finestra */
+    z-index: 10; /* Le impedisce di finire sotto i testi delle altre righe mentre si scorre */
+}

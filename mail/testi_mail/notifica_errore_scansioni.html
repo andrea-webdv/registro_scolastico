@@ -1,0 +1,24 @@
+<h2>Gentile Staff,</h2>
+        <p>Il sistema di rilevazione ha riscontrato un'anomalia nel registro presenze.</p>
+        <p>Sono state rilevate <strong> [conta_presenze_aperte] </strong> sessioni rimaste aperte (timbratura di entrata registrata, ma orario di uscita mancante) per il seguente utente:</p>
+
+        <table id="dati-anomalia" style="border-collapse: collapse; width: 100%; max-width: 500px;">
+            <thead>
+	    <tr>
+		    <th style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Matricola</strong></th>
+            <th style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Lezione</strong></th>
+            <th style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Aula</strong></th>
+            <th style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Data</strong></th>
+            <th style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Ora ingresso</strong></th>
+        </tr>
+	    </thead>
+	    <tbody>
+            {{RIGHE_TABELLA}}
+        </tbody>
+	</table>
+
+        <br>
+        <p>Per evitare errori nella generazione delle informazioni e garantire la corretta lettura delle ore, è richiesto un intervento manuale. Vi invitiamo ad accedere al pannello di amministrazione per verificare le date coinvolte e chiudere le presenze pendenti.</p>
+
+        <hr style='border: 0; border-top: 1px solid #ccc; margin: 20px 0;'>
+        <p style='font-size: 12px; color: #666;'>Cordiali saluti,<br>Mail automatica generata dal Sistema Automatico Gestione Presenze AgenForm.</p>

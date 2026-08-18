@@ -1,30 +1,40 @@
- /* Reset globale per azzerare i margini del browser */
+/* Reset globale e costanti brand AgenForm */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Barlow Condensed', sans-serif;
 }
 
-/* Le tue costanti colore originali della scuola */
 :root {
     --grigio_brand: #86878b;
     --rosso_brand: #951d3b;
 }
 
-html,
+/* Stili di base per la pagina */
 body {
-    min-height: 100vh;
     background-color: var(--grigio_brand);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #ffffff; 
 }
 
-/* NAVBAR (BARRA SUPERIORE) */
+h1 {
+    margin-bottom: 35px;
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Aggiunta della navbar */
 .barra-superiore,
 .navbar {
     width: 100%;
     height: 70px;
+    position: fixed;
     background-color: #ffffff;
     border-bottom: 4px solid var(--rosso_brand);
     display: flex;
@@ -33,6 +43,7 @@ body {
     padding: 0 40px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    top: 0%;
 }
 
 .spazio-logo .immagine-logo,
@@ -42,10 +53,59 @@ body {
     display: block;
 }
 
+/* Wrapper di posizionamento */
+.menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Pulsante hamburger (nascosto di default su schermi ampi) */
+.hamburger-btn {
+    display: none;
+    background: #9a1a3a;
+    color: #ffffff;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .gruppo-bottoni,
 .navbar-nav {
     display: flex;
     gap: 15px;
+    align-items: center;
+}
+
+/* Transizione a menu hamburger sotto la soglia di spazio (es. 1024px o schermi piccoli) */
+@media screen and (max-width: 1024px) {
+    .hamburger-btn {
+        display: block;
+    }
+
+    .gruppo-bottoni {
+        display: none;
+        /* Nasconde la barra orizzontale */
+        position: absolute;
+        top: 100%;
+        right: 0;
+        flex-direction: column;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        padding: 15px;
+        border-radius: 8px;
+        z-index: 1000;
+        width: max-content;
+        max-width: none;
+    }
+
+    /* Classe di attivazione dropdown */
+    .gruppo-bottoni.attivo {
+        display: flex;
+    }
 }
 
 .bottone-menu,
@@ -57,6 +117,7 @@ body {
     padding: 10px 20px;
     border-radius: 6px;
     transition: all 0.2s ease;
+    top: 0%;
 }
 
 .bottone-menu:hover,
@@ -71,186 +132,268 @@ body {
     color: #ffffff;
 }
 
-/* Gestione dei campi affiancati nella registrazione */
-.riga-campi {
+/* Contenitore per i pulsanti */
+.button-container {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
-.mezzo-campo {
+/* Stile unificato dei pulsanti in stile AgenForm */
+.btn {
+    display: inline-block;
+    padding: 13px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: var(--rosso_brand);
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    min-width: 200px;
+}
+
+.btn:hover {
+    background-color: #7a122e;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-create, .btn-read {
+    background-color: var(--rosso_brand);
+}
+
+.btn-create:hover, .btn-read:hover {
+    background-color: #7a122e;
+}
+
+.top-buttons {
+    margin-bottom: 35px;
+}
+/* ==========================================================================
+   STILI PER LE TABELLE E REGISTRI
+   ========================================================================== */
+
+/* FIX PER REGISTRO PRESENZE (Struttura basata su DIV) */
+.table-container .header .cell {
+    color: #333333 !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.table-container .row:not(.header) .cell {
+    color: #ffffff; 
+}
+
+
+table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, th * {
+    color: #eeeeee !important;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+
+td {
+    padding: 12px;
+    color: #333333 !important;
+    font-size: 15px;
+    font-weight: bold !important;
+}
+
+
+/* ==========================================================================
+   Stili per le card e i form 
+   ========================================================================== */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 800px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    min-width: 300px;
+    box-sizing: border-box;
+    color: #333333;
 }
 
-/* --- INPUT E BOTTONI UNIFICATI (Funzionano con qualsiasi classe usi) --- */
-.scritta-istruzione,
-.input-label {
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
     color: #333333;
     font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    text-align: left;
     margin-left: 4px;
 }
 
-.campo-input,
-.inputs {
+input[type="text"] {
     width: 100%;
     padding: 11px 14px;
-    margin-bottom: 14px;
     border: 1.5px solid #cccccc;
     border-radius: 6px;
+    box-sizing: border-box;
     font-size: 15px;
     color: #333333;
     outline: none;
     transition: all 0.2s ease-in-out;
 }
 
-.campo-input:focus,
-.inputs:focus {
+input[type="text"]:focus {
     border-color: var(--rosso_brand);
     box-shadow: 0 0 0 4px rgba(149, 29, 59, 0.15);
 }
 
-.bottone-rosso,
-.bottone-login,
-.buttons,
-#contenitoreButton input {
-    width: 100%;
-    padding: 13px;
-    background-color: var(--rosso_brand);
-    color: #ffffff;
-    border: none;
+.qr-code {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.qr-code img {
+    max-width: 100%;
+    height: auto;
+}
+
+.data-list {
+    text-align: center;
+    background: rgba(149, 29, 59, 0.05);
+    padding: 15px;
     border-radius: 6px;
     font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 8px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    word-break: break-all;
+    border: 1px solid #cccccc;
 }
-
-.bottone-rosso:hover,
-.bottone-login:hover,
-.buttons:hover {
-    background-color: #7a122e;
-}
-
-.bottone-rosso:active,
-.bottone-login:active,
-.buttons:active {
-    transform: scale(0.98);
-}
-
-a {
-    color: #951d3b
-}
-
-
 /* ==========================================================================
-   AGGIUNTE PER IL LOGIN E CENTRATURA CONTENUTI
+   ANIMAZIONE DI TRANSIZIONE GLOBALE (Per tutte le pagine)
    ========================================================================== */
-
-
-.scatola-login .sottotitolo {
-    color: #555555;
-    font-size: 16px;
-    margin-bottom: 25px;
+body {
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    opacity: 1;
+    transform: scale(1);
 }
 
-
-/* Stile pulito per il messaggio di errore dinamico */
-.messaggio-errore {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1.5px solid #f5c6cb;
-    padding: 12px 15px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    text-align: center;
+body.uscita-animata {
+    opacity: 0;
+    transform: scale(0.97); 
 }
-
-/* Stile per il link di switch tra Login Studenti e Login Admin */
-.spazio-link-admin {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.link-admin {
-    color: var(--rosso_brand);
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
-}
-
-
 /* ==========================================================================
-   ANIMAZIONE ROTAZIONE 3D (CARD FLIP)
+   LAYOUT A PIRAMIDE INVERSA PER LA HOMEPAGE
    ========================================================================== */
-
-/* Definisce l'area tridimensionale e la profondità dello specchio */
-.contenitore-card-3d {
-    perspective: 1200px;
-    width: 100%;
-    max-width: 400px;
-    /* Prende la misura perfetta del tuo login */
-    margin: 0 auto;
+.pyramid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-
-
-/* Regole speciali per le due facce del login */
-.faccia-fronte,
-.faccia-retro {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    /* Supporto Safari/Chrome vecchi */
-    width: 100%;
+.button-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
-/* Il fronte definisce l'altezza naturale del blocco */
-.faccia-fronte {
+/* Colore specifico per il pulsante di Logout (Grigio scuro) */
+.btn-logout {
+    background-color: #333333;
+}
+
+.btn-logout:hover {
+    background-color: #1a1a1a;
+}
+
+.button-row.dropdown-row {
+    align-items: flex-start;
+}
+
+/* Contenitore per gestire pulsante + tendina come un unico blocco */
+.dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
-    z-index: 2;
+    width: 200px; 
 }
 
-/* Il retro è inizialmente nascosto a specchio (capovolto di 180 gradi) */
-.faccia-retro {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    transform: rotateY(180deg);
-    z-index: 1;
+/* Stile base della tendina (Nascosta) */
+.dropdown-panel {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    width: 90%;
+    background-color: #ffffff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+    padding: 0 15px;
+    margin-top: -5px;
+    z-index: 10;
 }
 
-/* Stile per i finti pulsanti-link che effettuano lo switch */
-.spazio-link-admin {
-    margin-top: 20px;
+/* Classe attiva della tendina (Aperta) */
+.dropdown-panel.open {
+    max-height: 200px;
+    opacity: 1;
+    padding: 20px 15px 15px 15px;
+}
+
+/* Organizzazione degli elementi all'interno della tendina */
+.dropdown-panel form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Centra il testo suggerito nei campi di inserimento */
+.dropdown-panel input[type="text"] {
     text-align: center;
 }
 
-.link-switch-login {
-    background: none !important;
-    border: none !important;
-    color: var(--rosso_brand) !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    font-family: inherit !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
-    /* Forza la rimozione della sottolineatura */
-    display: inline-block !important;
-    /* Aiuta a gestire meglio gli spazi */
+.badge-utente {
+    background-color: #ffffff;
+    color: var(--rosso_brand, #a30000);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.link-switch-login:hover {
-    color: #7a122e !important;
-    text-decoration: none !important;
-    /* Assicura che non appaia al passaggio del mouse */
+.badge-utente + hr{
+    margin: 1rem auto;
+    width: 80%;
+    border-top: 3px solid var(--rosso_brand);
+    border-bottom: 2px solid white;
 }

@@ -1,0 +1,130 @@
+/* NAVBAR (BARRA SUPERIORE) */
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.card_corso {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-top: 4px solid var(--rosso_brand, #d9534f);
+    padding: 15px;
+    border-radius: 4px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 12rem;
+}
+
+.card_corso:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.corso-lezione {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444444;
+}
+
+.durata_corso {
+    display: flex;
+    font-size: 21px;
+    /* font-weight: 600; */
+    color: #777777;
+    margin: 2% 0px;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.nome_corso {
+    color: var(--rosso_brand, #d9534f);
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 8% 0px;
+}
+
+.edizione_corso {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666666;
+    line-height: 1.4;
+}
+
+.modal_box{
+    /* display: flex; */
+    background-color: #ffffff;
+    padding: 35px 45px;
+    border-radius: 8px;
+    border-top: 6px solid var(--rosso_brand, #d32f2f);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 620px;
+    text-align: center;
+    /* flex-direction: column; */
+    /* align-content: center; */
+    /* align-items: center; */
+}
+
+corso-selezionato {color: var(--rosso_brand);font-weight: bolder;}
+
+.scatola-card p{
+    line-height: 1.6rem;
+    font-weight: lighter;
+}
+
+.scatola-card form {
+    display: flex;
+    flex-direction: column;
+    height: 13rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.link-annulla {
+    color: #555555;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.bottone-rosso {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--rosso_brand);
+    transition: all 0.2s ease;
+    margin: 0.6rem;
+}
+
+dialog#modale_scelta {
+    position: fixed;
+    top: 50%;left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    height: min-content;
+    border: none;
+}
+
+div#grigliaCorsi {
+    max-width: 72vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 4vw;
+}
+
+.modal_box form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}

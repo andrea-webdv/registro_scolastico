@@ -1,0 +1,66 @@
+main {
+    flex: 1;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px;
+}
+
+.pannello-lettore {
+    background-color: #ffffff;
+    padding: 35px 45px; /* Aumentato leggermente il padding interno per i lati */
+    border-radius: 8px;
+    border-top: 6px solid var(--rosso_brand, #d32f2f);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 620px; /* Allargato a 620px per dare un aspetto più solido e spazioso */
+    text-align: center;
+}
+
+.titolo-sezione {
+    color: var(--rosso_brand, #d32f2f);
+    margin-bottom: 12px;
+    font-size: 28px; 
+    text-transform: uppercase;
+    letter-spacing: 1px; 
+    font-weight: 700;
+}
+
+.sottotitolo {
+    color: #555555;
+    font-size: 16px; 
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+
+#zona-scanner {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #cccccc;
+}
+
+/* Nasconde esplicitamente il link di switch per la scansione dei file */
+#zona-scanner__dashboard_section_swaplink, 
+#zona-scanner input[type="file"] {
+    display: none !important;
+}
+
+.messaggio-schermo {
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 18px; 
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+    word-break: break-all;
+    letter-spacing: 0.5px;
+}
+
+.successo { 
+    background-color: #d4edda; 
+    color: #155724; 
+    border: 1.5px solid #c3e6cb; 
+}

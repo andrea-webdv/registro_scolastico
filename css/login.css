@@ -1,82 +1,114 @@
-
-/* Forza la zona centrale a fare da contenitore flessibile e centrare i box */
-.zona-centrale {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-}
-
-/* --- SCHEDA DI LOGIN (Risolto lo stretching orizzontale) --- */
-.login-container,
-.scatola-login {
-    background-color: #ffffff;
-    padding: 40px 35px;
-    border-radius: 12px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-    width: 100%;
-    max-width: 400px;
-    /* Questa riga blocca la larghezza a dimensioni perfette */
-    text-align: center;
-}
-
-.login-container h1,
-.scatola-login h1 {
-    color: var(--rosso_brand);
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-.login-container .subtitle,
-.scatola-login .sottotitolo {
-    color: #555555;
-    font-size: 14px;
-    margin-bottom: 25px;
-}
-
-.login-container form,
-.scatola-login form {
-    display: flex;
-    flex-direction: column;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
-.messaggio-errore {
-    background-color: #f8d7da;
-    /* Sfondo rosso pastello leggero */
-    color: #951d3b;
-    /* Testo rosso scuro */
-    border: 1.5px solid #f5c6cb;
-    /* Bordo coordinato */
-    padding: 12px 15px;
-    border-radius: 6px;
+/* Pulsante Login specifico per la tendina */
+.btn-login {
+    background-color: var(--rosso_brand);
+    color: #ffffff;
+    border: none;
+    padding: 8px 25px;
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 20px;
-    /* Spazio prima dei campi del form */
-    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
 }
 
-/* Scatola interna che ruoterà fisicamente */
+.btn-login:hover {
+    background-color: #7a122e;
+}
+
+/* ==========================================================================
+   STILI PER LA SCHEDA CON ROTAZIONE 3D (FLIP CARD)
+   ========================================================================== */
+/* Contenitore principale con prospettiva 3D */
+.login-container-flip {
+    perspective: 1000px;
+    width: 320px;
+    height: 260px;
+    margin: 10px auto;
+}
+
+/* Elemento interno che ruota */
 .scatola-login-inner {
     position: relative;
     width: 100%;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Movimento fluido e realistico */
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
-    /* Dice al browser che i figli sono in uno spazio 3D */
 }
 
-/* Classe attivata dal JavaScript che innesca la rotazione a specchio */
+/* Classe applicata via JS per girare la carta */
 .scatola-login-inner.ruotato {
     transform: rotateY(180deg);
+}
 
+/* Stile per entrambe le facce */
+.scatola-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 10px;
+    border: 3px solid #333333;
+    padding: 25px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: fit-content;
+}
+
+.scatola-card h2 {
+    color: var(--rosso_brand);
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* La Faccia Retro ÃƒÆ’Ã‚Â¨ ruotata di base di 180 gradi */
+.faccia-retro {
+    transform: rotateY(180deg);
+}
+
+/* Form e controlli interni */
+.form-flip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.form-flip input[type="text"] {
+    text-align: center;
+    width: 90%;
+}
+
+/* Pulsante switch trasparente per girare la tessera */
+.btn-switch-flip {
+    background: none;
+    border: none;
+    color: var(--grigio_brand);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+    margin-top: 10px;
+}
+
+.btn-switch-flip:hover {
+    color: var(--rosso_brand);
+}
+
+.info-login {
+    color: #333333;
+    font-size: 15px;
+    margin: 4px 0;
 }
