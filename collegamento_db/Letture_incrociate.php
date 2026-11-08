@@ -202,8 +202,8 @@ function lettura_materie(?string $filtro = '', ?string $corso = '' ): array
     if (!empty($corso)) {
         $query .= " WHERE  studenti_corsi.`ID_corso` = ?";
     }
-    $query .= " GROUP BY materie.`nome_materia` ORDER BY nome_materia ASC";
-
+    $query .= " GROUP BY materie.`nome_materia`, materie.`cod_materia` ORDER BY nome_materia ASC";
+        
         console_log("query materie: " . $query);
 
 

@@ -1,4 +1,11 @@
 <?php
+$rootPath = dirname(__DIR__);
+require_once $rootPath . "/vendor/autoload.php";
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 function Exception_handler(mixed $ex)
 {
     // Stampiamo i dettagli dell'errore in modo leggibile
@@ -12,14 +19,24 @@ function Exception_handler(mixed $ex)
 function Collegamento()
 {
     try {
-        $conn = new PDO("mysql:host=127.0.0.1;port=3306;dbname=scuola_sandbox", "root", "");
-        // abilita gestione errori
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dsn = "mysql:host=sql.freedb.tech;port=3306;dbname=freedb_36z7taS3;charset=utf8mb4";
+        $user = $_ENV['FREEDB_USER'];
+        $pw = $_ENV['FREEDB_PASS'];
+        $conn = new PDO($dsn, $user, $pw, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+]);
+        echo "Connected successfully!";
     } catch (PDOException $ex) {
         Exception_handler ($ex);
         die();
     }
     
     return $conn;
+    
+    $dsn = "mysql:host=sql.freedb.tech;port=3306;dbname=freedb_36z7taS3;charset=utf8mb4";
+    $pdo = new PDO($dsn, "u_M77p9Q", "reQdiIo3DkJs", [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    ]);
+    echo "Connected successfully!";
 }
 ?>
