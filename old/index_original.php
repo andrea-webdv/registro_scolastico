@@ -102,7 +102,7 @@
 
         <div class="riquadroHomepage">
 
-            <img src="./materiali/Logo_AgenForm_2.png" alt="Logo AgenForm" class="logoCentrale">
+            <img src="./materiali/Logo_Alt.png" alt="Logo AgenForm" class="logoCentrale">
 
             <h1 class="titoloHomepage">
                 Benvenuto

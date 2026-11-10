@@ -204,7 +204,7 @@ $_SESSION['ID_corso_staff'] = $corso_selezionato;
 
     <header class="barra-superiore">
         <div class="spazio-logo">
-            <img src="./materiali/Logo_AgenForm_2.png" alt="Logo AgenForm" class="immagine-logo">
+            <img src="./materiali/Logo_Alt.png" alt="Logo AgenForm" class="immagine-logo">
         </div>
         <nav class="gruppo-bottoni">
             <a href="area_staff.php" class="bottone-menu attivo">Area Personale</a>

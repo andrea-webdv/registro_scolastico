@@ -3,7 +3,7 @@
 function navbar(array $bottoni, ?string $titolo = "")
 {
     // creazione dell'indirizzo con root del progetto
-    $logo_agenform =  __DIR__ . '\materiali\Logo_AgenForm_2.png'; #necessario scrivere l'indirizzo come string con backslash
+    $logo_agenform =  __DIR__ . '\materiali\Logo_Alt.png'; #necessario scrivere l'indirizzo come string con backslash
     $logo_agenform = str_replace('\\', '/', $logo_agenform);
     $logo_agenform = str_replace($_SERVER['DOCUMENT_ROOT'], '', $logo_agenform);
 

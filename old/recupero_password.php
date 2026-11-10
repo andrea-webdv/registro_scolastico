@@ -11,7 +11,7 @@
 
     <header class="barra-superiore">
         <div class="spazio-logo">
-                <img src="./materiali/Logo_AgenForm_2.png" alt="Logo AgenForm" class="immagine-logo">
+                <img src="./materiali/Logo_Alt.png" alt="Logo AgenForm" class="immagine-logo">
 
         </div>
         
